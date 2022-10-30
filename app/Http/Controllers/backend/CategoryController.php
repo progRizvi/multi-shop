@@ -10,4 +10,7 @@ class CategoryController extends Controller
     public function list(){
         return view("backend.pages.categories.categories");
     }
+    public function create(){
+        return view("backend.pages.categories.create");
+    }
 }

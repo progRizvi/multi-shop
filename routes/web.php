@@ -12,14 +12,17 @@ use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\ReportController;
 use App\Http\Controllers\backend\SellerController;
 
-Route::get("/",[AdminController::class, "admin"]);
+Route::get("/",[AdminController::class, "admin"])->name("/");
 
-Route::get("/sellers",[SellerController::class,"list"]);
-Route::get("/orders",[OrderController::class,"list"]);
-Route::get("/category",[CategoryController::class,"list"]);
-Route::get("/feedback",[FeedbackController::class,"list"]);
-Route::get("/discount",[DiscountController::class,"list"]);
-Route::get("/customers",[CustomerController::class,"list"]);
-Route::get("/payments",[PaymentController::class,"list"]);
-Route::get("/reports",[ReportController::class,"list"]);
-Route::get("/products",[ProductController::class,"list"]);
+Route::get("/sellers",[SellerController::class,"list"])->name("sellers");
+Route::get("/orders",[OrderController::class,"list"])->name("orders");
+Route::get("/category",[CategoryController::class,"list"])->name("category");
+
+Route::get("/category/create",[CategoryController::class,"create"])->name("category.create");
+
+Route::get("/feedback",[FeedbackController::class,"list"])->name("feedback");
+Route::get("/discount",[DiscountController::class,"list"])->name("discount");
+Route::get("/customers",[CustomerController::class,"list"])->name("customers");
+Route::get("/payments",[PaymentController::class,"list"])->name("payments");
+Route::get("/reports",[ReportController::class,"list"])->name("reports");
+Route::get("/products",[ProductController::class,"list"])->name("products");

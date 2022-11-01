@@ -19,7 +19,7 @@ Route::get("/orders",[OrderController::class,"list"])->name("orders");
 Route::get("/category",[CategoryController::class,"list"])->name("category");
 
 Route::get("/category/create",[CategoryController::class,"create"])->name("category.create");
-
+Route::post("/category/create/post", [CategoryController::class,"post"])->name("category.post");
 Route::get("/feedback",[FeedbackController::class,"list"])->name("feedback");
 Route::get("/discount",[DiscountController::class,"list"])->name("discount");
 Route::get("/customers",[CustomerController::class,"list"])->name("customers");

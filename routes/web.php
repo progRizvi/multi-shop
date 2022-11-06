@@ -14,15 +14,48 @@ use App\Http\Controllers\backend\SellerController;
 
 Route::get("/",[AdminController::class, "admin"])->name("/");
 
+// Seller Routes
 Route::get("/sellers",[SellerController::class,"list"])->name("sellers");
-Route::get("/orders",[OrderController::class,"list"])->name("orders");
-Route::get("/category",[CategoryController::class,"list"])->name("category");
+Route::get("/sellers/create", [SellerController::class, "create"])->name("sellers.create");
+Route::post("/sellers/store", [SellerController::class, "store"])->name("sellers.store");
+Route::get("/sellers/list/{id}",[SellerController::class, "singleOne"])->name("seller.single");
+Route::get("/sellers/delete/{id}", [SellerController::class, "deleteOne"])->name("seller.deleteOne");
+Route::get("/sellers/list/edit/{id}",[SellerController::class,"editSeller"])->name("seller.edit");
+Route::post("/sellers/update/{id}",[SellerController::class,"update"])->name("seller.update");
 
+
+// Orders
+Route::get("/orders",[OrderController::class,"list"])->name("orders");
+Route::get("/orders/create",[OrderController::class,"create"])->name("order.create");
+Route::post("/orders/store", [OrderController::class, "store"])->name("order.store");
+Route::get("/orders/list/{id}", [OrderController::class,"singleView"])->name("single.view");
+
+
+Route::get("/category",[CategoryController::class,"list"])->name("category");
 Route::get("/category/create",[CategoryController::class,"create"])->name("category.create");
-Route::post("/category/create/post", [CategoryController::class,"post"])->name("category.post");
+Route::post("/category/create", [CategoryController::class,"post"])->name("category.post");
+Route::get("/category/destroy/{id}", [CategoryController::class, "destroy"])->name("category.destroy");
+
+
 Route::get("/feedback",[FeedbackController::class,"list"])->name("feedback");
+
+
+
+// Discount
 Route::get("/discount",[DiscountController::class,"list"])->name("discount");
+Route::get("/discount/create", [DiscountController::class,"create"])->name("discount.create");
+Route::post("/discount/store", [DiscountController::class, "store"])->name("discount.store");
+Route::get("/discount/destroy.{id}", [DiscountController::class,"destroy"])->name("discount.destroy");
+Route::get("/discount/list/edit/{id}",[DiscountController::class, "edit"])->name("discount.edit");
+Route::post("/discount/update/{id}",[DiscountController::class, "update"])->name("discount.update");
+
+
+
+
 Route::get("/customers",[CustomerController::class,"list"])->name("customers");
 Route::get("/payments",[PaymentController::class,"list"])->name("payments");
 Route::get("/reports",[ReportController::class,"list"])->name("reports");
 Route::get("/products",[ProductController::class,"list"])->name("products");
+Route::get("/products/create",[ProductController::class, "create"])->name("products.create");
+Route::post("/products/store", [ProductController::class, "store"])->name("products.store");
+Route::get("/products/destroy/{id}", [ProductController::class, "destroy"])->name("products.destroy");

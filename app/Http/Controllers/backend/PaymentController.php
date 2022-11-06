@@ -10,4 +10,5 @@ class PaymentController extends Controller
     public function list(){
         return view("backend.pages.payments.payments");
     }
+
 }

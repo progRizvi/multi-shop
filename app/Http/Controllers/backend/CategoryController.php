@@ -9,18 +9,24 @@ use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     public function list(){
-        return view("backend.pages.categories.categories");
+        $cats = Category::all();
+        return view("backend.pages.categories.categories", compact("cats"));
     }
     public function create(){
         return view("backend.pages.categories.create");
     }
     public function post(Request $req){
-        // dd($req->all());
         Category::create([
             "name" => $req->name,
             "description" =>$req->description,
             "status" => $req->status
         ]);
         return redirect()->route("category");
+    }
+    public function destroy($id){
+        $cat = Category::find($id);
+        $cat->delete();
+
+        return redirect()->back();
     }
 }

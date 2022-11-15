@@ -16,7 +16,7 @@
         <tbody>
             @foreach ($cats as $key => $cat)
                 <tr>
-                    <td><img src="{{ $cat->img }}" alt="{{ $cat->name }}">
+                    <td><img src="{{ url('/uploads/category/', $cat->img) }}" alt="{{ $cat->name }}">
                     </td>
                     <td>{{ $cat->name }}</td>
                     <td>

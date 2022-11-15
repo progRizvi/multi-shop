@@ -2,14 +2,21 @@
 
 @section('content')
     <h1>Products</h1>
+    {{-- @dd($products) --}}
+
+    @if (session()->has('message'))
+        <div class="alert alert-success">{{ session()->get('key') }}</div>
+    @endif
     <a href="{{ route('products.create') }}" class="btn btn-outline-primary">Add Product</a>
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Product Name</th>
+                <th scope="col">Category Name</th>
                 <th scope="col">In Stock</th>
                 <th scope="col">Product Price</th>
+                <th scope="col">Image</th>
                 <th scope="col">Description</th>
                 <th scope="col">Action</th>
             </tr>
@@ -19,8 +26,12 @@
                 <tr>
                     <th scope="row">{{ $key + 1 }}</th>
                     <td>{{ $product->product_name }}</td>
+                    <td>{{ $product->category->name }}</td>
                     <td>{{ $product->in_stock }}</td>
                     <td>{{ $product->product_price }}</td>
+                    <td>
+                        <img src="{{ url("uploads/$product->product_img") }}" alt="">
+                    </td>
                     <td>{{ $product->description }}</td>
                     <td>
                         <a href="" class="text-primary"><i class="fas fa-eye"></i></a>

@@ -70,5 +70,13 @@
                 <span class="menu-title">Products</span>
             </a>
         </li>
+        @if (!auth()->user())
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login.show') }}">
+                    <i class="icon-paper menu-icon"></i>
+                    <span class="menu-title">Login</span>
+                </a>
+            </li>
+        @endif
     </ul>
 </nav>

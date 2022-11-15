@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class SellerController extends Controller
 {
     public function list(){
-        $sellers = Seller::all();
+        $sellers = Seller::paginate(5);
         return view("backend.pages.sellers.sellers",compact("sellers"));
     }
     public function create(){
@@ -17,13 +17,22 @@ class SellerController extends Controller
     }
     public function store(Request $req){
 
-
+        $req->validate([
+            "sellerName" => 'required',
+            "sellerPhone" =>  'required|unique:sellers,seller_number',
+            "sellerEmail" => 'required|unique:sellers,seller_email|email'
+        ]);
+        $imgName = null;
+        if($req->hasFile("sellerImg")){
+            $imgName = date("Ymdhis").".".$req->file("sellerImg")->getClientOriginalExtension();
+            $req->file("sellerImg")->storeAs("/uploads/sellers/",$imgName);
+        }
         Seller::create([
             "seller_name"=>$req->sellerName,
             "seller_number" => $req->sellerPhone,
+            "img" => $imgName,
             "seller_address" => $req->sellerAddress,
             "seller_email" => $req->sellerEmail,
-            "img" => $req->sellerImg
         ]);
 
 

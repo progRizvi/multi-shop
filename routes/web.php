@@ -11,15 +11,23 @@ use App\Http\Controllers\backend\PaymentController;
 use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\ReportController;
 use App\Http\Controllers\backend\SellerController;
+use App\Http\Controllers\frontend\HomeController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::get("/login", [AuthController::class, "login"])->name("login.show");
 Route::post("/login", [AuthController::class, "store"])->name("login.store");
 Route::get("/register", [AuthController::class, "register"])->name("register.show");
 Route::post("/register/store", [AuthController::class, "registerStore"])->name("register.store");
-Route::get("/delete/", [AuthController::class, "delete"])->name("delete");
+Route::get("/logout/", [AuthController::class, "delete"])->name("logout");
 
-Route::group(["middleware" => "auth"], function () {
+// FrontEnd Routes
+
+Route::get("/", [HomeController::class, "index"])->name("index");
+Route::get("/shop", [ShopController::class, "shop"])->name("shop");
+
+// Backend Routes
+Route::group(["middleware" => "auth", "prefix" => "admin"], function () {
 
     Route::get("/", [AdminController::class, "admin"])->name("/");
 

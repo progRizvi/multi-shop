@@ -81,7 +81,7 @@
                         <a class="dropdown-item" href="{{ route('/') }}">
                             {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}
                         </a>
-                        <a class="dropdown-item" href="{{ route('delete') }}">
+                        <a class="dropdown-item" href="{{ route('logout') }}">
                             <i class="ti-power-off text-primary"></i>
                             Logout
                         </a>

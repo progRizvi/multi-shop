@@ -8,33 +8,40 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function list(){
+    function list() {
         $cats = Category::all();
         return view("backend.pages.categories.categories", compact("cats"));
     }
-    public function create(){
+    public function create()
+    {
         return view("backend.pages.categories.create");
     }
-    public function post(Request $req){
+    public function post(Request $req)
+    {
         $req->validate([
-            "name" => "required|unique:categories,name"
+            "name" => "required|unique:categories,name",
         ]);
 
         $imgName = null;
-        if($req->hasFile("img")){
+        if ($req->hasFile("img")) {
 
-            $imgName = date("Ymdhis").".".$req->file("img")->getClientOriginalExtension();
+            $imgName = date("Ymdhis") . "." . $req->file("img")->getClientOriginalExtension();
             $req->file("img")->storeAs("/uploads/category", $imgName);
         }
+        $slug = strtolower($req->name);
+        $result = str_replace(" ", "-", $slug);
+        $result = str_replace("'", "", $result);
         Category::create([
             "name" => $req->name,
             "img" => $imgName,
-            "description" =>$req->description,
-            "status" => $req->status
+            "slug" => $result,
+            "description" => $req->description,
+            "status" => $req->status,
         ]);
         return redirect()->route("category");
     }
-    public function destroy($id){
+    public function destroy($id)
+    {
         $cat = Category::find($id);
         $cat->delete();
 

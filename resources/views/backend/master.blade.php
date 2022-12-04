@@ -21,12 +21,21 @@
     <link rel="stylesheet" href="{{ url('css/vertical-layout-light/style.css') }}">
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ url('images/favicon.png') }}" />
+    @notifyCss
+
+    <style>
+        .notify {
+            z-index: 1000000000;
+            margin-top: 2%;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container-scroller">
         <!-- partial:partials/_navbar.html -->
         @include('backend.partials.header')
+        <x:notify-messages />
         <div class="container-fluid page-body-wrapper">
             @include('backend.partials.setting')
             @include('backend.partials.rightSidebar')
@@ -41,6 +50,7 @@
         </div>
         <!-- container-scroller -->
 
+        @notifyJs
         <!-- plugins:js -->
         <script src="{{ url('vendors/js/vendor.bundle.base.js') }}"></script>
         <!-- endinject -->

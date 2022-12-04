@@ -19,37 +19,41 @@ Route::get("/login", [AuthController::class, "login"])->name("login.show");
 Route::post("/login", [AuthController::class, "store"])->name("login.store");
 Route::get("/register", [AuthController::class, "register"])->name("register.show");
 Route::post("/register/store", [AuthController::class, "registerStore"])->name("register.store");
-Route::get("/logout/", [AuthController::class, "delete"])->name("logout");
+Route::get("/logout/", [AuthController::class, "logout"])->name("logout");
 
 // FrontEnd Routes
 
 Route::get("/", [HomeController::class, "index"])->name("index");
 Route::get("/shop", [ShopController::class, "shop"])->name("shop");
+Route::get("/shop/product/{slug}", [ShopController::class, "singleView"])->name("product.view");
 
 // Backend Routes
-Route::group(["middleware" => "auth", "prefix" => "admin"], function () {
+Route::group(["middleware" => ["auth", "checkAdminSeller"], "prefix" => "admin"], function () {
 
     Route::get("/", [AdminController::class, "admin"])->name("/");
 
-// Seller Routes
-    Route::get("/sellers", [SellerController::class, "list"])->name("sellers");
-    Route::get("/sellers/create", [SellerController::class, "create"])->name("sellers.create");
-    Route::post("/sellers/store", [SellerController::class, "store"])->name("sellers.store");
-    Route::get("/sellers/list/{id}", [SellerController::class, "singleOne"])->name("seller.single");
-    Route::get("/sellers/delete/{id}", [SellerController::class, "deleteOne"])->name("seller.deleteOne");
-    Route::get("/sellers/list/edit/{id}", [SellerController::class, "editSeller"])->name("seller.edit");
-    Route::post("/sellers/update/{id}", [SellerController::class, "update"])->name("seller.update");
+    // Seller Routes
+
+    Route::group(["middleware" => "checkAdmin"], function () {
+        Route::get("/sellers", [SellerController::class, "list"])->name("sellers");
+        Route::get("/sellers/create", [SellerController::class, "create"])->name("sellers.create");
+        Route::post("/sellers/store", [SellerController::class, "store"])->name("sellers.store");
+        Route::get("/sellers/list/{id}", [SellerController::class, "singleOne"])->name("seller.single");
+        Route::get("/sellers/delete/{id}", [SellerController::class, "deleteOne"])->name("seller.deleteOne");
+        Route::get("/sellers/list/edit/{id}", [SellerController::class, "editSeller"])->name("seller.edit");
+        Route::post("/sellers/update/{id}", [SellerController::class, "update"])->name("seller.update");
+
+        Route::get("/category", [CategoryController::class, "list"])->name("category");
+        Route::get("/category/create", [CategoryController::class, "create"])->name("category.create");
+        Route::post("/category/create", [CategoryController::class, "post"])->name("category.post");
+        Route::get("/category/destroy/{id}", [CategoryController::class, "destroy"])->name("category.destroy");
+    });
 
 // Orders
     Route::get("/orders", [OrderController::class, "list"])->name("orders");
     Route::get("/orders/create", [OrderController::class, "create"])->name("order.create");
     Route::post("/orders/store", [OrderController::class, "store"])->name("order.store");
     Route::get("/orders/list/{id}", [OrderController::class, "singleView"])->name("single.view");
-
-    Route::get("/category", [CategoryController::class, "list"])->name("category");
-    Route::get("/category/create", [CategoryController::class, "create"])->name("category.create");
-    Route::post("/category/create", [CategoryController::class, "post"])->name("category.post");
-    Route::get("/category/destroy/{id}", [CategoryController::class, "destroy"])->name("category.destroy");
 
     Route::get("/feedback", [FeedbackController::class, "list"])->name("feedback");
 
@@ -64,9 +68,13 @@ Route::group(["middleware" => "auth", "prefix" => "admin"], function () {
     Route::get("/customers", [CustomerController::class, "list"])->name("customers");
     Route::get("/payments", [PaymentController::class, "list"])->name("payments");
     Route::get("/reports", [ReportController::class, "list"])->name("reports");
+
+    // Products
     Route::get("/products", [ProductController::class, "list"])->name("products");
     Route::get("/products/create", [ProductController::class, "create"])->name("products.create");
     Route::post("/products/store", [ProductController::class, "store"])->name("products.store");
     Route::get("/products/destroy/{id}", [ProductController::class, "destroy"])->name("products.destroy");
-
+    Route::get("/products/singleView/{id}", [ProductController::class, "singleView"])->name("product.single.view");
+    Route::get("/products/list/edit/{id}", [ProductController::class, "edit"])->name("product.edit");
+    Route::post("/products/list/update/{id}", [ProductController::class, "update"])->name("product.update");
 });

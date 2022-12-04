@@ -22,6 +22,15 @@
     <link href="{{ url('frontend/lib/animate/animate.min.css') }}" rel="stylesheet">
     <link href="{{ url('frontend/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
 
+    @notifyCss
+
+    <style>
+        .notify {
+            z-index: 1000000000;
+            margin-top: 2%;
+        }
+    </style>
+
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ url('frontend/css/style.css') }}" rel="stylesheet">
 </head>
@@ -37,6 +46,7 @@
     @include('frontend.partials.navbar')
 
     <!-- Navbar End -->
+    <x:notify-messages />
 
     @yield('content')
 
@@ -49,6 +59,7 @@
     <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
+    @notifyJs
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

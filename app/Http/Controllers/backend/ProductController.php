@@ -10,7 +10,13 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     function list() {
-        $products = Product::all();
+
+        $products = null;
+        if (auth()->user()->role === "admin") {
+            $products = Product::all();
+        } else {
+            $products = Product::where("user_id", auth()->user()->id)->get();
+        }
         return view("backend.pages.products.products", compact('products'));
     }
     public function create()
@@ -20,32 +26,32 @@ class ProductController extends Controller
     }
     public function store(Request $req)
     {
-        // dd($req->all());
+
         $req->validate([
             "product_name" => "required",
             "in_stock" => "required",
-            "seller_name" => "required",
             "product_price" => "required",
-            "product_img" => "mimes:jpeg,jpg,webp,png,gif",
 
         ]);
-        $imgName = null;
+        $imgName = [];
         if ($req->hasFile("product_img")) {
-            $imgName = date("Ymdhis") . "." . $req->file("product_img")->getClientOriginalExtension();
-            $req->file("product_img")->storeAs("/uploads/", $imgName);
+            foreach ($req->file("product_img") as $value) {
+                $randName = md5(rand(100, 1000)) . "." . $value->getClientOriginalExtension();
+                $value->move(public_path("/uploads/"), $randName);
+                $imgName[] = $randName;
+            }
         }
-
-        $slug = $req->product_name;
+        // dd($imgName);
+        $slug = $req->product_name . "-" . date("his");
 
         $result = str_replace(" ", "-", $slug);
-        $result = str_replace("'", "", $slug);
-
+        $result = strtolower(str_replace("'", "", $result));
         Product::create([
             "product_name" => $req->product_name,
             "category_id" => $req->category_id,
+            "user_id" => auth()->user()->id,
             "slug" => $result,
             "in_stock" => $req->in_stock,
-            "seller_name" => $req->seller_name,
             "product_img" => $imgName,
             "product_price" => $req->product_price,
             "description" => $req->description,
@@ -53,7 +59,19 @@ class ProductController extends Controller
         return redirect()->route("products")->with("message", "Product Created Successfully");
     }
 
-    public function singleOne($id)
+    public function singleView($id)
+    {
+
+        $product = Product::find($id);
+
+        return view("backend.pages.products.singleView", compact("product"));
+
+    }
+    public function edit($id)
+    {
+        return $id;
+    }
+    public function update($id)
     {
         return $id;
     }

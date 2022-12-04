@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet"
         href="https://colorlib.com/etc/regform/colorlib-regform-17/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <link rel="stylesheet" href="https://colorlib.com/etc/regform/colorlib-regform-17/css/style.css">
     <meta name="robots" content="noindex, follow">
@@ -27,13 +29,13 @@
                 <h3>Registration Form</h3>
                 <div class="form-group">
                     <input type="text" placeholder="First Name" class="form-control" autocomplete="false"
-                        name="fName" id="FirstName">
+                        name="firstName" id="FirstName">
                     <input type="text" placeholder="Last Name" class="form-control" autocomplete="false"
-                        name="lName" id="LastName">
+                        name="lastName" id="LastName">
                 </div>
                 <div class="form-wrapper">
-                    <input type="text" placeholder="Username" class="form-control">
-                    <i class="zmdi zmdi-account" name="userName"id="userName"></i>
+                    <input type="text" placeholder="Username" class="form-control" name="userName">
+                    <i class="zmdi zmdi-account" id="userName"></i>
                 </div>
                 <div class="form-wrapper">
                     <input type="text" placeholder="Email Address" class="form-control" autocomplete="false"
@@ -41,11 +43,19 @@
                     <i class="zmdi zmdi-email"></i>
                 </div>
                 <div class="form-wrapper">
-                    <select name="" id="" class="form-control" name="gender">
+                    <select id="" class="form-control" name="gender">
                         <option value="" disabled selected>Gender</option>
                         <option value="male">Male</option>
                         <option value="femal">Female</option>
                         <option value="other">Other</option>
+                    </select>
+                    <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
+                </div>
+                <div class="form-wrapper">
+                    <select id="" class="form-control" name="role">
+                        <option value="" disabled selected>Role</option>
+                        <option value="user">User</option>
+                        <option value="seller">Seller</option>
                     </select>
                     <i class="zmdi zmdi-caret-down" style="font-size: 17px"></i>
                 </div>
@@ -55,9 +65,18 @@
                     <i class="fas fa-eye"></i>
                 </div>
                 <div class="form-wrapper">
-                    <input type="password" placeholder="Confirm Password" class="form-control" name="confirmPass">
+                    <input type="password" placeholder="Confirm Password" class="form-control"
+                        name="password_confirmation">
                     <i class="zmdi zmdi-lock"></i>
                 </div>
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger">
+                            {{ $error }}
+                        </div>
+                    @endforeach
+                @endif
                 <button>Register
                     <i class="zmdi zmdi-arrow-right"></i>
                 </button>

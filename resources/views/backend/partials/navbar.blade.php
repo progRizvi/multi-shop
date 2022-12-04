@@ -7,21 +7,9 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('sellers') }}" aria-expanded="false" aria-controls="vendors">
-                <i class="icon-layout menu-icon"></i>
-                <span class="menu-title">Sellers</span>
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="{{ route('orders') }}" aria-expanded="false" aria-controls="orders">
                 <i class="icon-head menu-icon"></i>
                 <span class="menu-title">Orders</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('category') }}" aria-expanded="false" aria-controls="error">
-                <i class="icon-ban menu-icon"></i>
-                <span class="menu-title">Catagory</span>
             </a>
         </li>
         <li class="nav-item">
@@ -40,7 +28,6 @@
                 <span class="menu-title">Discount</span>
             </a>
         </li>
-
         <li class="nav-item">
             <a class="nav-link" href="{{ route('customers') }}">
                 <i class="menu-icon">
@@ -57,19 +44,32 @@
                 <span class="menu-title"> Payment</span></span>
             </a>
         </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('reports') }}">
-                <i class="icon-paper menu-icon"></i>
-                <span class="menu-title">Reports</span>
-            </a>
-        </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('products') }}">
                 <i class="icon-paper menu-icon"></i>
                 <span class="menu-title">Products</span>
             </a>
         </li>
+        @if (auth()->user()->role === 'admin')
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('category') }}" aria-expanded="false" aria-controls="error">
+                    <i class="icon-ban menu-icon"></i>
+                    <span class="menu-title">Catagory</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('sellers') }}" aria-expanded="false" aria-controls="vendors">
+                    <i class="icon-layout menu-icon"></i>
+                    <span class="menu-title">Sellers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('reports') }}">
+                    <i class="icon-paper menu-icon"></i>
+                    <span class="menu-title">Reports</span>
+                </a>
+            </li>
+        @endif
         @if (!auth()->user())
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('login.show') }}">

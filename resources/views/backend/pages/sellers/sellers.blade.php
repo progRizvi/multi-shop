@@ -9,22 +9,19 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Seller Name</th>
-                    <th scope="col">Seller Number</th>
-                    <th scope="col">Seller Address</th>
                     <th scope="col">Seller Email</th>
                     <th scope="col">Image</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
+                {{-- @dd($sellers->all()) --}}
                 @foreach ($sellers as $key => $seller)
                     <tr>
                         {{-- @dd($seller->img) --}}
-                        <th scope="row">{{ $key + $sellers->firstItem() }}</th>
-                        <td>{{ $seller->seller_name }}</td>
-                        <td>{{ $seller->seller_number }}</td>
-                        <td>{{ $seller->seller_address }}</td>
-                        <td>{{ $seller->seller_email }}</td>
+                        <th scope="row">{{ $key + 1 }}</th>
+                        <td>{{ $seller->first_name }} {{ $seller->last_name }}</td>
+                        <td>{{ $seller->email }}</td>
                         <td><img src="{{ url('/uploads/sellers', $seller->img) }}" alt=""></td>
                         <td>
                             <a href="{{ route('seller.single', ['id' => $seller->id]) }}" class="text-primary px-2"> <i
@@ -38,6 +35,6 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $sellers->links() }}
+        {{-- {{ $sellers->links() }} --}}
     </div>
 @endsection

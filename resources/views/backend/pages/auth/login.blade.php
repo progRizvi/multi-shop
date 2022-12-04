@@ -12,6 +12,14 @@
     <link rel="stylesheet" href="{{ url('vendors/ti-icons/css/themify-icons.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url('css/vertical-layout-light/style.css') }}">
+    @notifyCss
+
+    <style>
+        .notify {
+            z-index: 1000000000;
+            margin-top: 2%;
+        }
+    </style>
 </head>
 
 <body>
@@ -19,6 +27,7 @@
 
     <section class="vh-100">
         <div class="container-fluid h-custom">
+            <x:notify-messages />
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-9 col-lg-6 col-xl-5">
                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
@@ -52,16 +61,16 @@
 
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="email" id="form3Example3" class="form-control form-control-lg"
+                            <input type="email" id="email" class="form-control form-control-lg"
                                 value="admin@gmail.com" placeholder="Enter a valid email address" name="email" />
-                            <label class="form-label" for="form3Example3">Email address</label>
+                            <label class="form-label" for="email">Email address</label>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-3">
-                            <input type="password" id="form3Example4" class="form-control form-control-lg"
-                                value="rizvi" name="password" placeholder="Enter password" />
-                            <label class="form-label" for="form3Example4">Password</label>
+                            <input type="password" id="password" class="form-control form-control-lg" value="rizvi"
+                                name="password" placeholder="Enter password" />
+                            <label class="form-label" for="password">Password</label>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
@@ -87,6 +96,10 @@
                                 {{ session()->get('message') }}
                             </div>
                         @endif
+
+                        <button class="btn btn-primary" id="seller" type="button">Seller</button>
+                        <button class="btn btn-warning" id="user" type="button">User</button>
+                        <button class="btn btn-warning" id="admin" type="button">Admin</button>
                     </form>
                 </div>
             </div>
@@ -94,6 +107,22 @@
     </section>
 
 
+    <script>
+        const email = document.getElementById("email")
+        const pass = document.getElementById("password")
+        const sellerBtn = document.getElementById("seller")
+        const userBtn = document.getElementById("user")
+        const adminBtn = document.getElementById("admin")
+
+        function event(a, b) {
+            email.value = a
+            pass.value = b
+        }
+        sellerBtn.addEventListener("click", () => event("seller@gmail.com", "seller"))
+        user.addEventListener("click", () => event("user@gmail.com", "user"))
+        admin.addEventListener("click", () => event("admin@gmail.com", "rizvi"))
+    </script>
+    @notifyJs
 </body>
 
 </html>

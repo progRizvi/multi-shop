@@ -14,8 +14,20 @@
                     <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My
                         Account</button>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <button class="dropdown-item" type="button">Sign in</button>
-                        <button class="dropdown-item" type="button">Sign up</button>
+                        @if (!auth()->user())
+                            <button class="dropdown-item" type="button">
+                                <a href="{{ route('login.show') }}">Sign in</a>
+                            </button>
+                            <button class="dropdown-item" type="button">
+
+                                <a href="{{ route('register.show') }}">Sign up</a>
+                            </button>
+                        @else
+                            <button class="dropdown-item" type="button">
+
+                                <a href="{{ route('logout') }}">Logout</a>
+                            </button>
+                        @endif
                     </div>
                 </div>
                 <div class="btn-group mx-2">
